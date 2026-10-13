@@ -1,0 +1,531 @@
+SET
+  SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+
+START TRANSACTION;
+
+SET
+  time_zone = "+00:00";
+
+CREATE TABLE
+  `comentarios` (
+    `id` int (11) NOT NULL,
+    `id_obra` int (11) NOT NULL,
+    `id_usuario` int (11) NOT NULL,
+    `contenido` text NOT NULL,
+    `calificacion` int (11) NOT NULL,
+    `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+INSERT INTO
+  `comentarios` (
+    `id`,
+    `id_obra`,
+    `id_usuario`,
+    `contenido`,
+    `calificacion`,
+    `fecha`
+  )
+VALUES
+  (1, 1, 2, '¡Brutal!', 5, '2026-08-06 01:02:59'),
+  (
+    3,
+    2,
+    1,
+    'Me voló la cabeza.',
+    4,
+    '2026-08-06 01:26:50'
+  ),
+  (
+    4,
+    1,
+    1,
+    'No me gustó :p',
+    1,
+    '2026-08-06 02:16:43'
+  ),
+  (9, 3, 2, 'increíble', 5, '2026-08-09 23:17:07'),
+  (10, 4, 2, 'wooow!!', 5, '2026-08-09 23:17:14'),
+  (
+    12,
+    4,
+    1,
+    'Quedó genial, vdd',
+    5,
+    '2026-08-31 00:38:29'
+  ),
+  (
+    19,
+    4,
+    3,
+    'Lo odio te odio muere',
+    1,
+    '2026-08-11 20:40:48'
+  ),
+  (29, 3, 1, 'omgomg', 5, '2026-08-24 20:54:22'),
+  (
+    30,
+    12,
+    1,
+    'Dios, que increible',
+    5,
+    '2026-08-24 20:59:34'
+  ),
+  (31, 13, 1, 'hmmmm', 2, '2026-08-24 21:00:33'),
+  (32, 12, 4, 'wowww', 4, '2026-08-24 21:03:44'),
+  (33, 4, 5, 'LOL', 1, '2026-08-24 21:17:21'),
+  (
+    35,
+    22,
+    2,
+    'awwww!! que linda',
+    5,
+    '2026-09-03 23:08:32'
+  ),
+  (
+    37,
+    23,
+    2,
+    'Bacanisimo!!',
+    5,
+    '2026-09-04 00:32:56'
+  ),
+  (38, 24, 1, 'omg', 5, '2026-09-04 01:37:47'),
+  (40, 9, 1, 'noi', 5, '2026-09-08 21:10:15');
+
+CREATE TABLE
+  `obras` (
+    `Id` int (11) NOT NULL,
+    `id_usuario` int (11) NOT NULL,
+    `titulo` varchar(150) NOT NULL,
+    `categoria` varchar(50) NOT NULL,
+    `tipo_contenido` varchar(50) NOT NULL,
+    `descripcion` text NOT NULL,
+    `archivo` varchar(255) NOT NULL,
+    `archivo_audio` varchar(255) DEFAULT NULL,
+    `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+    `estado` enum ('publicado', 'borrador') DEFAULT 'publicado'
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+INSERT INTO
+  `obras` (
+    `Id`,
+    `id_usuario`,
+    `titulo`,
+    `categoria`,
+    `tipo_contenido`,
+    `descripcion`,
+    `archivo`,
+    `archivo_audio`,
+    `fecha`,
+    `estado`
+  )
+VALUES
+  (
+    1,
+    1,
+    'Tomás Carrasquilla',
+    'Literatura',
+    'Ensayo',
+    '**lugar y periodo:** Santo Domingo, Antioquia (17 de enero de 1858) – Medellín, Antioquia (19 de\r\ndiciembre de 1940).\r\n\r\n**Disciplina:**Literatura (Novela, cuento, ensayo, crónica periodística).\r\n\r\n**Contexto histórico y formación**\r\nTomás Carrasquilla creció en una época marcada por los constantes enfrentamientos políticos\r\ndel siglo XIX en Colombia. Aunque inició sus estudios de Derecho en la Universidad de\r\nAntioquia, la guerra civil de 1877 interrumpió su formación académica formal. Este hecho lo\r\nllevó a formarse de manera autodidacta a través de la lectura devota de clásicos españoles y\r\nla narrativa realista europea (de autores como Gustave Flaubert y Émile Zola). A lo largo de\r\nsu vida alternó el trabajo de escritorio y el comercio con el oficio de las letras,\r\nconsolidándose como el primer escritor de la región antioqueña en asumir la literatura con\r\nrigor profesional y dedicación absoluta.\r\n\r\n<img src=\"IMG/libros.jpeg\" alt=\"Libros\">\r\n\r\n**Propuesta Estética y Estilo Literario**\r\nEl lenguaje como material plástico\r\nEl aporte estético más significativo de Carrasquilla radicó en la dignificación de la\r\noralidad. En lugar de adoptar un castellano rígido e influenciado por cánones europeos\r\nlejanos, utilizó el dialecto popular —las formas de hablar de campesinos, mineros,\r\nlavanderas y comerciantes de Antioquia— y lo elevó a categoría de arte sin caer en la\r\ncaricatura ni en la burla.\r\n\r\n**Profundidad psicológica y realismo crítico**\r\nAunque a menudo se le clasificó erróneamente dentro del \"costumbrismo\" tradicional (que solo\r\ndescribía paisajes y costumbres pintorescas), la propuesta de Carrasquilla fue más allá. Sus\r\nhistorias poseen un denso trasfondo crítico: cuestionó la hipocresía de las clases altas, la\r\nambición desmedida impulsada por la fiebre del oro, las rigideces religiosas y los\r\nprejuicios raciales de la sociedad antioqueña de los siglos XIX y XX.\r\n\r\n**Obras Representativas y su Análisis**\r\nLa marquesa de Yolombó (1928): Considerada su obra cumbre. Es una novela\r\nhistórica ambientada a finales de la colonia que reconstruye la vida social, económica y\r\nracial en las zonas de minería de oro.\r\n\r\n**Aporte:** A través del personaje de Doña Bárbara Caballero y Alzate, explora la ambición, la\r\nsuperstición y el rol represivo que la sociedad imponía a las mujeres de la época.\r\n\r\n**Frutos de mi tierra (1896):**Su primera gran novela. Nació de una apuesta en\r\nla que el autor sostuvo que se podía redactar una gran obra tomando como insumo las\r\nrencillas cotidianas de un pueblo pequeño.\r\n\r\nEs un retrato mordaz sobre las apariencias, los chismes, la envidia y las dinámicas\r\nsociales de la provincia.\r\n\r\n**En la diestra de Dios Padre (1897):** Un cuento clásico fundado en la tradición\r\noral de la región sobre Peralta, un hombre piadoso que recibe dones divinos y logra engañar\r\na la Muerte y al Diablo.\r\n\r\n**Aporte:**Es señalado por la crítica literaria hispanoamericana como uno de los antecedentes\r\nmás claros del realismo mágico, al fusionar con naturalidad lo fantástico con la\r\ncotidianidad popular.\r\n\r\n**Grandeza (1910)**: Novela urbana enfocada en la naciente burguesía de Medellín.\r\n\r\n**Aporte:** Satiriza las modas, pretensiones e ínfulas de aristocracia de las familias\r\nadineradas de la ciudad en pleno proceso de industrialización.\r\n\r\n<img src=\"IMG/6772ff5e9d730ff9fb9bab0e_6772fd6cb6ad22bb00eeb6a7_9.webp\" alt=\"pintura\">\r\n\r\n**Impacto, Legado e Importancia en Medellín**\r\nTestigo de la transformación urbana\r\nCarrasquilla documentó el paso de Medellín de una villa provinciana a una urbe moderna e\r\nindustrializada. Sus obras y crónicas son un registro histórico invaluable sobre cómo\r\ncambiaron los espacios, los valores y las dinámicas sociales de la ciudad a principios del\r\nsiglo XX.\r\n\r\n**Dinamizador de la vida cultural**\r\nA pesar de su ceguera en los últimos años de vida, su casa en Medellín y las tertulias a las\r\nque asistía sirvieron como punto de convergencia para las nuevas vanguardias literarias y\r\nartísticas, influyendo en intelectuales y creadores de la talla de Fernando González Ochoa y\r\nel grupo de Los Panidas (encabezado por León de Greiff).\r\n\r\n**Memoria en la infraestructura de la ciudad**\r\nSu nombre y legado hoy trascienden los libros. El Parque Biblioteca Tomás Carrasquilla (La\r\nQuintana), ubicado entre las comunas 6 y 7 de Medellín, lleva su nombre como un\r\nreconocimiento a su valor patrimonial, sirviendo como un espacio de transformación social y\r\nacceso a la cultura para la ciudadanía.',
+    'IMG/tomasxd.jpg',
+    NULL,
+    '2026-09-04 00:57:53',
+    'publicado'
+  ),
+  (
+    2,
+    2,
+    'Débora Arango',
+    'Literatura',
+    'Pintura',
+    '**Contexto e Historia de la ObraPintada** en 1970 bajo la técnica de óleo\r\nsobre lienzo, **monjas y el\r\ncardenal ** —también catalogada en los registros museológicos como El recreo—\r\nes una de las\r\ncreaciones más representativas de la artista antioqueña Débora Arango Pérez (1907-2005).\r\nLa obra ingresó a la colección del Museo de Arte Moderno de Medellín (MAMM) en 1986,\r\ncomo parte de la histórica donación de 233 piezas realizada por la propia artista a la\r\nciudad. A mediados del siglo XX, Antioquia mantenía una estructura social marcadamente\r\nconservadora, dominada por una estricta jerarquía eclesiástica y política. En este\r\ncontexto, la producción de Arango supuso una ruptura estética y conceptual: mediante el\r\nlenguaje del expresionismo, la pintora utilizó el arte como una herramienta crítica para\r\ncuestionar el poder institucional, la moral de la época y los roles de género.\r\n\r\n<img src=\"IMG/ladanza.jfif\">\r\n\r\n** Análisis Compositivo y Lenguaje Visual: **\r\nDesde el punto de vista estético y compositivo, la pintura\r\nplantea un cuidadoso manejo de la ** tensión visual:**\r\n** Punto focal y contraste cromático: **\r\nEl centro geométrico y narrativo de la escena lo ocupa una pequeña jaula que custodia a\r\nun\r\nave de plumaje rojo vivo (un cardenal). Este color contrasta intencionalmente con los\r\ntonos fríos, oscuros y sombríos del fondo y de los hábitos religiosos.\r\n** Dinámica grupal y gestualidad:**\r\nSeis religiosas rodean la jaula en una actitud marcada por la fascinación,\r\nla curiosidad y la vigilancia. A pesar del subtítulo de la obra (El recreo), ** la\r\nescena\r\nno transmite relajación;** por el contrario, la cercanía física entre las\r\nmonjas y la\r\nforma en que señalan y acorralan la jaula generan un ambiente de tensión\r\ncontenida.\r\n** Estilo expresionista:**\r\nFiel al sello de la artista, las figuras no responden a\r\ncánones de belleza tradicional ni a un realismo académico.\r\n** Arango recurre a pinceladas sueltas,** empastadas y directas para\r\ntransmitir la carga psicológica y simbólica de la\r\nescena.\r\n** Simbolismo e Interpretación Crítica**\r\nEl significado fundamental de la obra se construye a partir de una alegoría e ironía\r\nlingüística:\r\n** Juego de palabras y sátira institucional:** La artista aprovecha el\r\ndoble sentido de la palabra cardenal, que remite\r\ntanto al pájaro rojo como al alto rango jerárquico de la Iglesia Católica. Al colocar al\r\nave cautiva bajo la mirada fija de las monjas, Arango satiriza el aislamiento de la vida\r\nconventual, ** la fascinación por el poder clerical ** y las restricciones\r\nde la institución\r\nreligiosa.\r\n\r\n<img src=\"IMG/colombia.png\" alt=\"pintura\">\r\n\r\n** Reflexión sobre el encierro y el género:**\r\nLa escena aborda la tensión entre la devoción obligada, la abstinencia y el deseo\r\ncontenido. El encierro físico del ave\r\ndentro de la jaula actúa como un espejo del propio confinamiento social y espiritual que\r\nvivían las mujeres en los espacios monásticos de la época.\r\n** Legado e Impacto Cultural:**\r\nla trascendencia de esta pintura en el patrimonio antioqueño ha superado el lienzo\r\npictórico.\r\n** Escultura pública:** En el Parque Cultural Débora Arango del municipio\r\nde\r\nEnvigado se encuentra un conjunto monumental en bronce a tamaño real, creado por el\r\nescultor Juan Fernando Torres Gómez (inaugurado en 2014), el cual recrea de forma\r\ntridimensional a las seis monjas contemplando al cardenal.\r\n** Reconocimiento: **\r\nEsta pieza permanece como un referente indispensable del arte figurativo colombiano y\r\ndel papel\r\npionero de Débora Arango en la denuncia social a través de las artes plásticas.',
+    'IMG/pintura-debora.webp',
+    NULL,
+    '2026-09-04 00:50:23',
+    'publicado'
+  ),
+  (
+    3,
+    1,
+    'Ilustración de Boothill!',
+    'Artes Visuales',
+    'Ilustración',
+    'Hice este dibujo para demostrar mi amor hacia el personaje...',
+    'IMG/boothill.webp',
+    NULL,
+    '2026-08-31 00:33:10',
+    'publicado'
+  ),
+  (
+    4,
+    1,
+    'Autorretrato',
+    'Artes Visuales',
+    'Pintura',
+    'Este es mi Autorretrato; inspirado en el autorretrato de Akira Toriyama, un mangaka muy conocido que influyó en varias partes de mi vida.\r\n                        Su anime Dragon Ball fue parte de mi infancia en cada momento, así que este dibujo es mi forma de honorarlo.',
+    'IMG/self.webp',
+    NULL,
+    '2026-08-31 00:23:56',
+    'publicado'
+  ),
+  (
+    5,
+    2,
+    'Ramo de flores azules expresivas',
+    'Artes visuales',
+    'Pintura',
+    'Ramo de flores azules expresivas del artista Cheong.',
+    'IMG/artistico.jpeg',
+    NULL,
+    '2026-08-09 21:11:32',
+    'publicado'
+  ),
+  (
+    6,
+    2,
+    'Devorar para nacer: el cuerpo como territorio de transformación',
+    'Literatura',
+    'Ensayo',
+    'El pueblo iatmul, de Papúa Nueva Guinea, conserva un **ritual de iniciación** en el que la\r\n                                piel de los jóvenes es marcada con cortes que, al cicatrizar, evocan la **piel de un\r\n                                cocodrilo**. Lejos de ser un simple acto de resistencia al dolor, este ritual representa\r\n                                una muerte simbólica y un nuevo nacimiento. **El cocodrilo no destruye: construye. Al\r\n                                devorar, devuelve una nueva existencia**.\r\n\r\n                                La imagen del cocodrilo como un segundo útero transforma la idea de nacer. No se nace\r\n                                una sola vez. **Se nace cada vez que algo de nosotros muere.** Entrar en la boca del animal\r\n                                es regresar al origen, al lugar donde toda identidad desaparece para reconstruirse desde\r\n                                la herida. Los cortes no son únicamente cicatrices; son la escritura del cuerpo, una\r\n                                memoria que dice: aquí terminó alguien y comenzó otro.\r\n\r\n                                Nacer, morir, renacer. Llorar, reír. Ver el odio y aprender a reconocerlo. Dormir para\r\n                                soñar otra posibilidad. Cortar, cortar, cortar. Cada verbo parece una etapa inevitable\r\n                                del mismo recorrido. La existencia no avanza en línea recta; gira sobre sí misma como un\r\n                                ciclo en el que todo se transforma. La carne se abre para que aparezca una piel\r\n                                distinta, del mismo modo que la tierra se rompe para permitir el crecimiento de una\r\n                                semilla.\r\n\r\n                                Esta visión también recuerda la antigua frase: **\"Del polvo naciste y al polvo volverás\"**.\r\n                                El cuerpo terminará deshaciéndose hasta confundirse con la tierra. Sin embargo, ese\r\n                                polvo no desaparece. Regresa precisamente al lugar que más hemos transformado, y muchas\r\n                                veces, al que más hemos destruido: la naturaleza. El cuerpo vuelve a la tierra como una\r\n                                deuda silenciosa. Lo que fue carne termina siendo suelo, y el suelo sostiene nuevas\r\n                                vidas. La muerte deja de ser un final absoluto para convertirse en una forma distinta de\r\n                                permanencia.\r\n\r\n                                **El ritual iatmul** enseña que el verdadero nacimiento no ocurre cuando respiramos por\r\n                                primera vez, sino cuando aceptamos que la transformación exige perder algo de nosotros.\r\n                                El cocodrilo representa esa fuerza capaz de destruir una identidad para construir otra.\r\n                                La herida deja de ser un signo de violencia y se convierte en evidencia de que el cambio\r\n                                ha ocurrido.\r\n\r\n                                **Quizá toda vida sea eso:** entrar una y otra vez en el vientre simbólico del cocodrilo.\r\n                                Dejar atrás una piel que ya no puede contenernos, aceptar el dolor del corte y\r\n                                comprender que, al final, todos regresaremos al polvo. Pero ese polvo no es ausencia; es\r\n                                el comienzo de otra forma de existir.',
+    'IMG/iatmul.jpg',
+    NULL,
+    '2026-09-05 21:31:28',
+    'publicado'
+  ),
+  (
+    7,
+    2,
+    'Almuerzo en lo alto de un rascacielos',
+    'Fotografía',
+    'Fotografía',
+    'Once trabajadores almorzando en una viga de acero en Nueva York en 1932.',
+    'IMG/almuerzo.jpeg',
+    NULL,
+    '2026-08-09 21:11:32',
+    'publicado'
+  ),
+  (
+    8,
+    1,
+    'Teresita Gómez',
+    'Música',
+    'Pianista',
+    '**lugar y periodo:** Medellín, Antioquia (9 de mayo de 1943 – presente).\r\n\r\n**DISCIPLINA** Música académica (Piano clásico, música de cámara, diplomacia\r\ncultural y docencia superior).\r\n\r\n**Contexto histórico, discriminación y resiliencia**\r\nNacida en Medellín dentro de una familia afrocolombiana, fue adoptada recién nacida por\r\nValerio Gómez y María Teresa Arteaga, una pareja de condición modesta que trabajaba en las\r\nlabores de vigilancia y mantenimiento del Palacio de Bellas Artes de Medellín. Al crecer\r\nliteralmente dentro de la institución, su primer contacto con el instrumento ocurrió de\r\nforma empírica: durante las noches, la niña replicaba de oído en los salones vacíos los\r\nejercicios que les escuchaba practicar a las alumnas de clase alta durante el día.\r\n\r\nA los cuatro años, tras ser descubierta por las maestras Marta Agudelo de Maya y Anna María\r\nPenella, inició sus lecciones formales, ofreciendo su primer recital con solo diez años. No\r\nobstante, su consolidación artística debió vencer barreras sociales extremas. Durante las\r\ndécadas de 1950 y 1960, la música clásica en Colombia era un territorio exclusivo de las\r\nélites, lo que sometió a Teresita a situaciones sistemáticas de racismo y clasismo. A pesar\r\nde la exclusión social de la época, su talento incontestable la llevó a graduarse en el\r\nConservatorio de la Universidad Nacional de Colombia (bajo la dirección de Tatiana\r\nGoncharova e Hilde Adler) y, posteriormente, a obtener el título de Concertista y Profesora\r\nde Piano Summa Cum Laude en la Universidad de Antioquia, apadrinada por el pianista holandés\r\nHarold Martina.\r\n\r\n**Propuesta Estética, Estilo e Innovación Musical**\r\n\r\n**La superación de la brecha entre lo clásico y lo popular**\r\nEl gran valor de la propuesta de Teresita Gómez no estriba únicamente en su virtuosismo\r\ntécnico, sino en su ideología artística: desdemocratizar el piano de cola y despojar a la\r\nmúsica académica de su carácter acartonado y elitista.\r\n\r\n<img src=\"IMG/piano.jfif\" class=\"tes\" alt=\"teresita\">\r\n\r\n**Dualidad de repertorio:** En sus conciertos convive en absoluta paridad\r\ntécnica la rigurosidad canónica del romanticismo europeo (Frédéric Chopin, Ludwig van\r\nBeethoven, Franz Liszt) con la complejidad armónica de la música andina colombiana y los\r\nritmos de la región (bambucos, pasillos e intermezzos).\r\n\r\n**Diplomacia cultural y difusión internacional:** Entre 1983 y 1987, al\r\ndesempeñarse como Agregada Cultural de la Embajada de Colombia en la República Democrática\r\nAlemana (RDA), aprovechó su estancia en Europa para formarse con maestros en Varsovia,\r\nBerlín y Weimar. Se convirtió en la principal embajadora de la música académica colombiana,\r\ninterpretando obras de compositores nacionales en teatros de Madrid, París, Varsovia,\r\nBerlín, Bucarest y Varsovia.\r\n\r\n**Trayectoria, Obras y Discografía Clave\r\nTeresa Gómez a Colombia (1983):**\r\n\r\n**Análisis:** Disco pionero producido para el sello Discos Orbe donde llevó las\r\ncomposiciones tradicionales de autores como Carlos Vieco, Luis A. Calvo y Adolfo Mejía al\r\nestándar de recital de piano clásico.\r\n\r\n**Para Recordar (2000) y Antología I (2007):**\r\n**Análisis:** Producciones discográficas lanzadas en convenio con la\r\nUniversidad de Antioquia. Articulan piezas emblemáticas del repertorio polaco y alemán con\r\nla intimidad de la música popular colombiana del siglo XX.\r\n\r\n<img src=\"IMG/finca.jfif\">\r\n\r\n**Participaciones operísticas y orquestales emblemáticas:**\r\n\r\nFue la pianista oficial de la Ópera de Medellín (1971-1972) y de la Ópera de Colombia\r\n(1975-1981).\r\n\r\nProtagonizó el estreno mundial en Colombia del Segundo Concierto para Piano del compositor\r\nitaliano Carlo Jachino, acompañada por la Orquesta Sinfónica de Colombia.\r\n\r\n**Impacto, Reconocimientos y Legado Institucional**\r\nFormación y academia\r\nDurante más de cuatro décadas ha sido el pilar de la enseñanza pianística en Colombia.\r\nAdemás de su cátedra titular en la Universidad de Antioquia (de la cual es profesora\r\njubilada y referente viva), ha dictado clases en la Universidad del Cauca, la Universidad de\r\nCaldas y la Universidad de los Andes.\r\n\r\n**Condecoraciones y honores nacionales\r\nCruz de Boyacá en el Grado de Comendador: **Máxima distinción concedida por el\r\nGobierno de Colombia en reconocimiento a sus 50 años de trayectoria artística.\r\n\r\n**Doctorado Honoris Causa: **Otorgado por la Universidad Nacional de Colombia\r\npor su contribución a la cultura, la pedagogía y la integración social del país.\r\n\r\n**Bautizo de espacios de artes:**\r\n\r\nEn Medellín, la Universidad de Antioquia bautizó en su honor la \"Sala de Artes Performativas\r\nTeresita Gómez\".\r\n\r\nEn Bogotá, el Ministerio de las Culturas, las Artes y los Saberes nombró oficialmente la\r\nsala principal de conciertos del Centro Nacional de las Artes como \"Sala Sinfónica Teresita\r\nGómez\".',
+    'IMG/teresa-dibujo.jpg',
+    NULL,
+    '2026-09-04 00:53:50',
+    'publicado'
+  ),
+  (
+    9,
+    2,
+    'Latinoamérica y sus libros para el pueblo',
+    'Literatura',
+    'Ensayo',
+    '**INTRODUCCION: LA INVERSION DE UNA PREMISA HISTORICA**\r\n\r\nExiste un dogma profundamente arraigado en la tradición académica occidental: **la\r\nidea de que los\r\nlibros «hacen» a los pueblos.**\r\nSe nos ha enseñado que la literatura es un faro civilizador, una\r\nherramienta de iluminación pedagógica que desciende desde las élites intelectuales hacia las\r\nmasas para educarlas, moldearlas o corregirlas.\r\n\r\n\r\nSin embargo, al examinar la historia literaria de América Latina, esa ecuación se invierte\r\ndrásticamente. En un continente atravesado por la oralidad, las brechas de acceso a la\r\neducación y\r\nla constante resistencia sociocultural, es el pueblo el que hace al libro. La literatura\r\nlatinoamericana no nace en el aislamiento de las torres de marfil, sino que\r\n**nutre** ,respira y\r\ncobra sentido a través de la voz colectiva, las dinámicas de la calle, las memorias\r\ncampesinas y la lucha diaria de sus comunidades.\r\n\r\n** EL PRIMER CAMINO: La voz viva, la oralidad y la estética de lo cotidiano**\r\nEl primer camino para entender esta relación es la literaturización de la voz popular. En\r\nAmérica Latina, la imprenta y la escritura formal llegaron como instrumentos de poder\r\ncolonial. Ante esta imposición, el pueblo respondió preservando su memoria a través de la\r\npalabra hablada: mitos, coplas, leyendas y relatos de tradición oral.\r\n\r\nCuando los grandes autores de la región decidieron escribir obras verdaderamente\r\ntrascendentes, descubrieron que no podían hacerlo dándole la espalda a esa riqueza.\r\n\r\nEl lenguaje popular como alta literatura: Autores como Tomás Carrasquilla en Colombia o Juan\r\nRulfo\r\nen México no inventaron sus universos desde la abstracción teórica; ** salieron a\r\nescuchar.\r\nTranscribieron la sintaxis** , el ritmo, el humor y la tragedia con la que los\r\ncampesinos,\r\nmineros y sectores marginados hablaban sobre el mundo.\r\n\r\n** EL LIBRO COMO MICROFONO:** En este primer camino, el escritor no impone un\r\ndiscurso: actúa como un\r\ncanalizador. El libro pasa a ser un artefacto* donde el pueblo se ve reflejado en su\r\npropio\r\nlenguaje,* validando su cultura e identidad frente a los cánones académicos\r\nimpuestos desde afuera.\r\n\r\n** EL SEGUNDO CAMINO:** El espejo histórico y la denuncia política\r\nEl segundo camino abarca una literatura nacida como respuesta o reacción directa a las\r\ncrisis sociales, políticas y económicas del continente. América Latina ha sido\r\nhistóricamente un territorio\r\nmoldeado por la desigualdad, las dictaduras, la violencia y los despojos.\r\n\r\nFrente a esta realidad, el libro asume una función de espejo social y archivo de la memoria\r\nhistórica:\r\n\r\n**La urgencia de contar la realidad: ** Desde la novela de la Revolución\r\nMexicana o la narrativa\r\nindigenista, hasta la literatura sobre las dictaduras del Cono Sur y el fenómeno de la\r\nnovela testimonial, las obras más impactantes de la región han sido directamente moldeadas\r\npor los\r\nacontecimientos populares.\r\n\r\nEl libro como trinchera y testimonio: La gente no solo aporta el material temático; la\r\nexigencia del\r\npueblo por verdad y justicia empuja a la literatura a abandonar el mero entretenimiento\r\nestético y\r\nasumir un compromiso ético. El libro se convierte en un registro indeleble de aquellos a\r\nquienes la\r\nhistoria oficial intentó silenciar.\r\n\r\n** CONCLUSIÓN** Dos caminos que llevan al mismo destino\r\nTanto el camino del rescate de la oralidad cotidiana como el camino de la denuncia social\r\nconvergen\r\nen una misma certidumbre: la literatura en América Latina solo cobra vigencia cuando\r\nmantiene su cordón umbilical ligado a la realidad popular.\r\n\r\nUn libro en nuestro contexto no se consagra únicamente por su virtuosismo técnico o por el\r\naplauso\r\nde la crítica especializada, sino por su capacidad para resonar en la memoria colectiva. A\r\ntravés de sus formas de hablar, sus sufrimientos, sus fiestas y sus luchas, el pueblo\r\nlatinoamericano\r\nconstruye el libro mucho antes de que el autor ponga la primera palabra sobre el papel',
+    'IMG/libros.jpeg',
+    NULL,
+    '2026-09-04 00:45:47',
+    'publicado'
+  ),
+  (
+    12,
+    2,
+    'La mirada sobre la ciudad',
+    'Fotografia',
+    'Fotografia',
+    'La fotografía en Medellín no es un simple registro estético; es la memoria viva de sus transformaciones, sus contrastes y sus rostros.',
+    'IMG/meliton.jpg',
+    NULL,
+    '2026-08-11 20:57:32',
+    'publicado'
+  ),
+  (
+    13,
+    2,
+    'Retrato de María Cano Márquez en su juventud',
+    'Literatura',
+    'Fotografia',
+    '**La etapa pre-sindical:** Cuando Benjamín de la Calle toma este retrato, María Cano (nacida en 1887) tenía entre 23 y 28 años. Todavía no era la figura masiva de la política colombiana conocida como «La Flor del Trabajo» (rol que asumiría hacia 1925 en las huelgas petroleras y bananeras).\r\nLa intelectual y escritora: En esa época, María Cano pertenecía al círculo intelectual y literario de Medellín. Escribía poesía, participaba en la tertulia de la revista Cyrano y comenzaba a interesarse por los problemas sociales de los obreros del Valle de Aburrá.\r\nEl espacio del estudio: Benjamín de la Calle tenía su taller en el dinámico barrio Guayaquil, paso obligado de bohemios, intelectuales, comerciantes y trabajadores. Acudir a su estudio era un acto social de afirmación de la propia identidad.\r\n**3. Análisis Estético y Lenguaje Fotográfico**\r\nEncuadre y Plano: Es un primer plano (close-up) sobrio que centra toda la tensión en el rostro de la retratada.\r\nIluminación de Gabinete: Utiliza la luz difusa de ventanal, típica del estudio de De la Calle, combinada con reflectores manuales para suave modelado. No hay luces estidentes, lo que resalta la textura de la piel y los detalles del cabello ondulado recogido según la moda de los años 1910.\r\nMirada e Intención: La mirada de María Cano es directa a la lente, serena, penetrante e intelectual. rompe con el estereotipo de la mujer tímida o pasiva del siglo XIX.\r\nSímbolos y Vestuario: Luciendo un collar fino con una pequeña cruz (o medalla) y atuendo oscuro de cuello alto de la época, la imagen combina la recatada moda tradicional antioqueña con la actitud moderna y decidida de una pensadora.\r\n**4. Importancia Técnica y Patrimonial**\r\nUso de la Placa de Vidrio: La nitidez extrema en sus ojos, cejas y labios se debe al uso de placas de vidrio con emulsión de gelatino-bromuro. Este soporte permitía un nivel de detalle en los grises e iluminación que superaba a las impresiones en papel de la época.\r\nDemocratización de la Imagen: Benjamín de la Calle no solo retrató a las élites antioqueñas; retrató por igual a figuras emergentes del pensamiento y a los sectores populares. Este retrato es un testimonio visual del surgimiento del liderazgo femenino moderno en Colombia.',
+    'IMG/maria.webp',
+    NULL,
+    '2026-09-04 00:47:39',
+    'publicado'
+  ),
+  (
+    14,
+    2,
+    'La memoria de lo cotidiano: una mirada a Roma de Alfonso Cuarón',
+    'Teatro',
+    'Ensayo',
+    'Roma (2018), dirigida por Alfonso Cuarón, es una película que, a primera vista, parece\r\n                            contar una historia sencilla: la vida de una familia de clase media en la Ciudad de México\r\n                            durante los años setenta y, especialmente, la vida de Cleo, una de las trabajadoras\r\n                            domésticas de la casa. Sin embargo, detrás de esa aparente sencillez existe una reflexión\r\n                            mucho más profunda sobre la memoria, la desigualdad, el abandono y las formas silenciosas en\r\n                            las que las personas sostienen la vida de los demás. Roma no necesita grandes\r\n                            acontecimientos para construir una historia conmovedora; encuentra su fuerza precisamente en\r\n                            aquello que normalmente permanece en segundo plano.\r\n                            Uno de los aspectos más importantes de la película es su representación de Cleo. Ella\r\n                            trabaja limpiando, cocinando, cuidando a los niños y manteniendo el funcionamiento cotidiano\r\n                            de la casa. Su presencia es constante, pero durante gran parte de la historia parece\r\n                            confundirse con el propio espacio doméstico. Esto refleja una realidad social en la que el\r\n                            trabajo de las empleadas domésticas suele ser indispensable y, al mismo tiempo,\r\n                            invisibilizado. Cleo pertenece a una clase social y a un grupo étnico históricamente\r\n                            discriminado, mientras que la familia para la que trabaja disfruta de una posición económica\r\n                            y social diferente. La película no necesita explicar constantemente esta desigualdad: está\r\n                            presente en los espacios que ocupan los personajes, en la manera en que se relacionan y\r\n                            hasta en quién puede descansar y quién debe continuar trabajando.\r\n                            Pero Cuarón evita convertir a Cleo únicamente en un símbolo de la explotación. Ella es, ante\r\n                            todo, una persona. Tiene deseos, miedo, afectos y contradicciones. Su embarazo y el abandono\r\n                            del padre de su hijo permiten observar una forma particular de vulnerabilidad. Fermín\r\n                            desaparece precisamente cuando Cleo más necesita apoyo, y su abandono reproduce, en otro\r\n                            nivel, una situación que también experimentan los adultos de la familia. El padre de los\r\n                            niños se marcha de la casa y deja a Sofía enfrentándose sola a la ruptura de su matrimonio.\r\n                            De esta manera, la película establece un paralelismo entre dos mujeres pertenecientes a\r\n                            mundos sociales distintos: ambas son abandonadas por hombres, ambas deben continuar cuidando\r\n                            a otros y ambas experimentan una transformación que las obliga a sostenerse a sí mismas.\r\n                            En este sentido, Roma también puede entenderse como una película sobre las mujeres y sobre\r\n                            la manera en que el cuidado recae sobre ellas. Cleo cuida a los hijos de Sofía, mientras\r\n                            Sofía cuida a sus hijos y, en cierto modo, también intenta cuidar a Cleo. La diferencia de\r\n                            clase no desaparece, pero existe entre ellas una solidaridad que se vuelve especialmente\r\n                            significativa. La maternidad aparece así no como una experiencia idealizada, sino como una\r\n                            responsabilidad compleja, dolorosa y, muchas veces, solitaria.\r\n                            La película también está profundamente marcada por la memoria. Roma no parece construida\r\n                            solamente para narrar lo que sucedió, sino para reconstruir cómo se recuerda algo que\r\n                            sucedió hace mucho tiempo. Esto se puede observar en su fotografía en blanco y negro, en los\r\n                            largos planos y en la atención que presta a objetos, sonidos y espacios aparentemente\r\n                            insignificantes. El coche entrando y saliendo del garaje, el agua con jabón sobre el suelo,\r\n                            los aviones atravesando el cielo o los niños jugando en la casa adquieren una importancia\r\n                            especial. Son imágenes que parecen pertenecer más al recuerdo que al presente.\r\n                            El propio título, Roma, hace referencia a la colonia Roma de Ciudad de México, pero también\r\n                            puede entenderse como una especie de espacio mental. La casa se convierte en un universo\r\n                            pequeño donde ocurren las tragedias y alegrías de sus habitantes, mientras afuera existe un\r\n                            país atravesado por conflictos políticos y sociales. La película conecta así la intimidad de\r\n                            una familia con acontecimientos históricos como el llamado Halconazo de 1971. La violencia\r\n                            política aparece inesperadamente en medio de una historia doméstica, recordándonos que la\r\n                            vida privada nunca está completamente separada de la historia.\r\n                            Uno de los momentos más importantes ocurre durante el nacimiento del hijo de Cleo. El parto\r\n                            resulta particularmente doloroso porque el bebé nace muerto. La escena no está presentada\r\n                            como un espectáculo melodramático, sino con una distancia que hace que el acontecimiento\r\n                            resulte todavía más devastador. Cleo pierde a su hija, pero inmediatamente después continúa\r\n                            existiendo una responsabilidad que no puede detenerse: debe volver a cuidar a los niños de\r\n                            la familia. Su propio dolor queda parcialmente subordinado a las necesidades de los demás.\r\n                            Esto representa de manera muy poderosa una de las ideas centrales de la película: hay\r\n                            personas cuyo sufrimiento permanece invisible porque la vida cotidiana exige que continúen\r\n                            funcionando.\r\n                            Sin embargo, quizá el momento más revelador de la relación entre Cleo y los niños ocurre en\r\n                            la playa. Después de salvar a los niños del mar, Cleo confiesa que no quería que su hija\r\n                            naciera. La familia la abraza y ella finalmente puede expresar aquello que había mantenido\r\n                            reprimido. Es una escena fundamental porque elimina, aunque sea momentáneamente, las\r\n                            diferencias entre ellos. No desaparecen las diferencias económicas ni sociales, pero aparece\r\n                            algo más elemental: el reconocimiento del dolor de otra persona.\r\n                            Formalmente, Cuarón utiliza una cámara que observa en lugar de perseguir constantemente la\r\n                            acción. Los personajes muchas veces aparecen pequeños dentro del encuadre, rodeados por\r\n                            espacios enormes. La cámara se mueve lentamente y permite que el espectador observe los\r\n                            acontecimientos casi como si estuviera mirando un recuerdo. Esta elección provoca una\r\n                            sensación particular: Roma no parece querer decirnos qué debemos sentir, sino permitirnos\r\n                            permanecer frente a las imágenes hasta que nosotros mismos descubramos su significado.\r\n                            El sonido también tiene una importancia extraordinaria. La película está llena de ruidos\r\n                            cotidianos: vendedores ambulantes, aviones, perros, automóviles, radios, conversaciones\r\n                            lejanas. Estos sonidos construyen una Ciudad de México que existe incluso cuando no vemos\r\n                            directamente aquello que los produce. Es como si el mundo continuara ocurriendo alrededor de\r\n                            los personajes, indiferente a sus tragedias personales.\r\n                            Por todo esto, Roma puede considerarse una película sobre la memoria, pero también sobre\r\n                            aquello que la memoria suele dejar fuera. Las grandes historias suelen recordar a\r\n                            presidentes, guerras, revoluciones y acontecimientos históricos; Cuarón, en cambio, recuerda\r\n                            a una mujer que limpia un patio, prepara el desayuno, lleva a unos niños al colegio y\r\n                            permanece junto a ellos cuando otros adultos desaparecen. La película convierte esas\r\n                            acciones aparentemente insignificantes en una forma de heroísmo silencioso.\r\n                            Al final, Roma plantea una pregunta incómoda: ¿quiénes son realmente las personas que\r\n                            sostienen nuestras vidas? Cleo trabaja dentro de una casa que no es suya, pero termina\r\n                            siendo una de las figuras más importantes de la familia. Su existencia demuestra que muchas\r\n                            veces las personas que consideramos parte del paisaje cotidiano son precisamente quienes\r\n                            hacen posible nuestra vida.\r\n                            La grandeza de Roma está, entonces, en mirar aquello que normalmente no miramos. No necesita\r\n                            presentar a Cleo como una heroína tradicional. Su heroísmo consiste en continuar. En\r\n                            levantarse, trabajar, cuidar, sufrir y volver a cuidar. En ese sentido, la película es\r\n                            también un homenaje a todas aquellas personas cuya historia permanece detrás de las puertas\r\n                            de las casas, detrás de los objetos cotidianos y detrás de las vidas de otros. Cuarón\r\n                            convierte esa memoria privada en cine y, al hacerlo, demuestra que lo cotidiano puede\r\n                            contener tanta tragedia, belleza e importancia como cualquier acontecimiento histórico.\r\n                            En mayo de 2025, se realizó un homenaje en el marco del II Encuentro Afro, el cual se llevó\r\n                            a cabo en el Centro Nacional de las Artes, con un recital de piano interpretado en la sala\r\n                            ahora denominada Teresita Gómez en su honor.',
+    'IMG/roma.jfif',
+    NULL,
+    '2026-08-31 00:53:50',
+    'publicado'
+  ),
+  (
+    15,
+    2,
+    'El arraigo en Simone Weil: la necesidad de pertenecer al mundo',
+    'Literatura',
+    'Ensayo',
+    'Simone Weil escribió Echar raíces en un momento histórico marcado por la guerra, el exilio,\r\n                            la destrucción y la ruptura de los vínculos sociales. Sin embargo, su reflexión sobre el\r\n                            arraigo no se limita a las circunstancias políticas de su época. Weil plantea una pregunta\r\n                            mucho más profunda: ¿qué necesita un ser humano para sentir que su existencia tiene un lugar\r\n                            en el mundo? Su respuesta parte de una idea sencilla, pero de enormes consecuencias: el ser\r\n                            humano necesita raíces.\r\n\r\n                            Para Weil, estar arraigado no significa simplemente vivir durante mucho tiempo en un\r\n                            determinado lugar. Una persona puede permanecer toda su vida en una ciudad y, aun así,\r\n                            sentirse completamente extranjera en ella. El arraigo es algo más profundo: es la\r\n                            participación real, activa y natural en una comunidad que conserva una memoria, una\r\n                            historia, unas relaciones y un futuro compartido. Por eso, el arraigo no es únicamente\r\n                            geográfico. Es también cultural, espiritual, social e incluso temporal. Significa sentir que\r\n                            existe un vínculo entre lo que fuimos, lo que somos y aquello que podremos llegar a ser.\r\n\r\n                            Esta concepción resulta especialmente importante porque Weil considera el arraigo una de las\r\n                            necesidades fundamentales del alma humana. Así como el cuerpo necesita alimento, descanso y\r\n                            protección, el espíritu necesita vínculos que le permitan reconocerse dentro de una realidad\r\n                            más amplia que el individuo. Una persona completamente separada de su comunidad, de su\r\n                            historia o de cualquier horizonte común puede conservar su libertad exterior y, sin embargo,\r\n                            experimentar una profunda forma de desolación.\r\n\r\n                            Aquí aparece una de las ideas más interesantes de Weil: el contrario del arraigo no es\r\n                            solamente el desarraigo físico, sino también la sensación de no pertenecer a ninguna parte.\r\n                            El desarraigo puede producirse mediante la pobreza, la opresión, la guerra, la explotación\r\n                            laboral o la destrucción de las tradiciones. Pero también puede aparecer cuando una sociedad\r\n                            obliga a sus individuos a vivir únicamente para producir, consumir o competir. En ese caso,\r\n                            las personas dejan de sentirse participantes de una comunidad y pasan a convertirse en\r\n                            piezas intercambiables de una maquinaria económica.\r\n\r\n                            Por eso Weil concede una importancia particular al trabajo. El trabajo podría ser una de las\r\n                            formas más profundas de arraigo porque permite al individuo participar en la construcción\r\n                            concreta del mundo. Sin embargo, cuando el trabajador carece de dignidad, autonomía o\r\n                            conciencia de lo que hace, el trabajo puede producir precisamente lo contrario: desarraigo.\r\n                            El ser humano ya no experimenta su actividad como una contribución a una realidad\r\n                            compartida, sino como una obligación mecánica impuesta desde afuera.\r\n\r\n                            La crítica de Weil no se dirige únicamente contra determinadas condiciones económicas. Es,\r\n                            en un sentido más profundo, una crítica contra cualquier sistema que convierta al ser humano\r\n                            en un medio. Para ella, una sociedad verdaderamente humana debería permitir que las personas\r\n                            experimentaran su trabajo, sus relaciones y su vida colectiva como algo dotado de sentido.\r\n                            El individuo necesita sentir que su existencia importa y que forma parte de algo que lo\r\n                            precede y que continuará después de él.\r\n\r\n                            En este punto, el arraigo se relaciona con otra de las grandes preocupaciones de Weil: la\r\n                            obligación. Weil considera que solemos pensar primero en nuestros derechos, pero que las\r\n                            obligaciones son anteriores. Antes de preguntarnos qué nos deben los demás, debemos\r\n                            reconocer que existen necesidades humanas que reclaman nuestra atención. El hambre, la\r\n                            vulnerabilidad, la necesidad de pertenecer, de recibir reconocimiento o de participar en una\r\n                            comunidad no dependen de que una persona haya adquirido determinados derechos jurídicos. Son\r\n                            necesidades humanas fundamentales.\r\n\r\n                            Esta inversión resulta radical. Para Weil, una sociedad justa no debería construirse\r\n                            únicamente alrededor de individuos que reclaman derechos, sino alrededor de seres humanos\r\n                            que reconocen obligaciones hacia otros seres humanos. El arraigo, entonces, no es una\r\n                            experiencia puramente individual. No puedo estar verdaderamente arraigado si los demás a mi\r\n                            alrededor están completamente abandonados, humillados o expulsados de la comunidad. El\r\n                            arraigo posee necesariamente una dimensión colectiva.\r\n\r\n                            También existe una relación profunda entre arraigo y memoria. Una comunidad necesita\r\n                            recordar para poder existir como comunidad. Las costumbres, las obras, las historias, los\r\n                            lugares y las experiencias compartidas crean una continuidad entre generaciones. Pero Weil\r\n                            no propone una adoración ciega del pasado. El pasado puede contener injusticias y errores\r\n                            que deben ser transformados. Lo importante es que el presente no destruya\r\n                            indiscriminadamente aquello que recibió de quienes estuvieron antes.\r\n\r\n                            Esto permite comprender una aparente paradoja en su pensamiento: arraigarse no significa\r\n                            quedarse inmóvil. Tener raíces no significa rechazar el cambio. Un árbol tiene raíces\r\n                            precisamente porque puede crecer. Del mismo modo, una persona necesita una relación con su\r\n                            pasado para poder proyectarse hacia el futuro sin sentirse suspendida en el vacío. El\r\n                            arraigo proporciona continuidad, no inmovilidad.\r\n\r\n                            La imagen de las raíces resulta especialmente poderosa por esta razón. Una raíz permanece\r\n                            oculta, pero sostiene aquello que aparece en la superficie. Del mismo modo, gran parte de\r\n                            aquello que constituye a una persona no es visible: su lengua, sus recuerdos, las historias\r\n                            que escuchó, las personas que la educaron, los lugares donde creció, las costumbres que\r\n                            aprendió y las experiencias que comparte con otros. Todo ello forma una especie de\r\n                            territorio interior.\r\n\r\n                            Sin embargo, Weil también comprendió que las raíces pueden ser arrancadas. La guerra, el\r\n                            exilio y la violencia política muestran de manera evidente esta destrucción, pero existen\r\n                            formas más silenciosas de desarraigo. Una persona puede perder sus raíces sin abandonar\r\n                            físicamente su hogar. Puede ocurrir cuando deja de reconocerse en su comunidad, cuando su\r\n                            trabajo pierde todo sentido, cuando su memoria es despreciada o cuando siente que no tiene\r\n                            ninguna participación en el futuro.\r\n\r\n                            Esta idea continúa siendo sorprendentemente actual. En sociedades caracterizadas por la\r\n                            movilidad, la velocidad y la transformación constante, muchas personas pueden encontrarse\r\n                            conectadas con miles de individuos y, al mismo tiempo, profundamente solas. Podemos tener\r\n                            acceso a innumerables culturas, conversaciones e imágenes y, sin embargo, no sentir que\r\n                            pertenecemos verdaderamente a ninguna comunidad. La abundancia de conexiones no garantiza el\r\n                            arraigo.\r\n\r\n                            Quizá por eso la reflexión de Weil resulta tan inquietante: nos obliga a distinguir entre\r\n                            estar conectado y estar arraigado. Estar conectado significa poder comunicarse con otros.\r\n                            Estar arraigado significa sentir que existe una relación significativa entre nuestra\r\n                            existencia y el mundo que habitamos.\r\n\r\n                            En última instancia, el arraigo en Simone Weil puede entenderse como una forma de\r\n                            reconciliación entre el individuo y el mundo. El ser humano no existe como una conciencia\r\n                            aislada flotando libremente, sino dentro de una red de relaciones, obligaciones, recuerdos y\r\n                            responsabilidades. Necesitamos libertad, pero también necesitamos pertenecer. Necesitamos\r\n                            autonomía, pero también vínculos. Necesitamos imaginar el futuro, pero sin quedar\r\n                            completamente separados del pasado.\r\n\r\n                            La importancia de Echar raíces reside precisamente en que Weil no presenta el arraigo como\r\n                            una comodidad sentimental, sino como una condición de la vida humana. Tener raíces significa\r\n                            poder decir, de alguna manera: “este mundo también es mío y yo tengo alguna responsabilidad\r\n                            sobre él”. El desarraigo, por el contrario, aparece cuando esa relación se rompe y la\r\n                            persona deja de sentirse participante para convertirse en espectadora, extranjera o\r\n                            instrumento.\r\n\r\n                            Así, el pensamiento de Simone Weil puede leerse como una defensa de aquello que sostiene\r\n                            silenciosamente la existencia humana. Las raíces no se ven, pero sin ellas nada puede\r\n                            crecer. De la misma manera, una sociedad puede parecer desarrollada, libre y moderna\r\n                            mientras sus individuos pierden poco a poco los vínculos que les permiten sentirse parte de\r\n                            ella. El verdadero desafío consiste entonces no solamente en construir un futuro, sino en\r\n                            construir un futuro en el que las personas puedan volver a sentir que tienen un lugar en el\r\n                            mundo.',
+    'uploads/1788137572_simone.jfif',
+    NULL,
+    '2026-08-31 00:52:52',
+    'publicado'
+  ),
+  (
+    17,
+    1,
+    'amiguibis',
+    'Artes visuales',
+    'Publicación',
+    'k tal???**texto en negrita***texto en itálica*\r\n- Elemento de lista omggggg',
+    'uploads/1788131347_tomzo.webp',
+    NULL,
+    '2026-08-30 23:31:04',
+    'borrador'
+  );
+
+INSERT INTO
+  `obras` (
+    `Id`,
+    `id_usuario`,
+    `titulo`,
+    `categoria`,
+    `tipo_contenido`,
+    `descripcion`,
+    `archivo`,
+    `archivo_audio`,
+    `fecha`,
+    `estado`
+  )
+VALUES
+  (
+    23,
+    2,
+    '¿Sin lenguaje no hay pensamiento?',
+    'Literatura',
+    'Ensayo',
+    '**ILUSION DE UNA PREGUNTA VACIA**\r\nDurante siglos, la filosofía ha intentado descifrar el límite donde termina la mente y\r\ncomienza la palabra. La premisa tradicional sostiene que el ser humano piensa en la medida\r\nen que posee un código para estructurar sus ideas: ** ¿sin lenguaje no hay\r\npensamiento?** Sin embargo, abordar esta cuestión desde la rigidez de la\r\nlingüística es, en muchos sentidos,** responder a una pregunta vacía.**\r\n\r\nEl verdadero dilema no radica en si podemos procesar abstracciones sin vocabularios\r\nprefijados, sino en qué hacemos con esa conciencia una vez que despierta. Es en la\r\nintersección entre el existencialismo moderno y la literatura romántica donde el pensamiento\r\ndeja de ser un mero mecanismo cognitivo para convertirse en una carga existencial: la eterna\r\ndisyuntiva entre atreverse a pensar o refugiarse en la comodidad de la ignorancia.\r\n\r\n** EL LENGUAJE COMO PRISION Y CONSTRUCCION DE LA REALIDAD**\r\nSi el lenguaje determina la realidad, la conciencia individual queda atrapada en las paredes\r\nde lo transmisible. El existencialismo del siglo XX —con figuras como ** Jean-Paul\r\nSartre y Albert Camus** — planteó que el ser humano está «condenado a ser libre»\r\ny a dotar de sentido a un universo esencialmente absurdo. Pero esa libertad se articula a\r\ntravés del pensamiento crítico, el cual necesita del lenguaje para nombrarse a sí mismo.\r\n\r\nCuando el individuo carece de las palabras para definir su angustia, su alienación o sus\r\ndeseos, su existencia se diluye en una inercia pasiva. La literatura romántica ya anticipaba\r\neste fenómeno: el héroe romántico no sufre por la falta de ideas, sino por la incapacidad de\r\nhacer encajar su inmensidad interior en el lenguaje normativo de una sociedad superficial.\r\n\r\n** LA LITERATURA ROMANTICA Y EL DON DE LA CONCIENCIA**\r\nEn el romanticismo, el pensamiento individual es tanto un don como una maldición. Personajes\r\ncomo el ** Werther de Goethe** o el ** monstruo de Mary Shelley**\r\nen Frankenstein experimentan un despertar cognitivo doloroso. A medida que aprenden el\r\nlenguaje y comprenden su entorno, su capacidad de sufrimiento se multiplica\r\nexponencialmente.\r\n\r\n** «La ignorancia es una bendición, pero el conocimiento es un camino sin\r\nretorno.»**\r\n\r\nEl hombre que elige pensar se separa del rebaño; rompe con el automatismo de la vida\r\ncotidiana y se enfrenta a la nada existencial. De repente, la pregunta sobre el lenguaje\r\ndeja de ser técnica para volverse vital: la palabra nos da el poder de comprender el mundo,\r\npero también la lucidez necesaria para ver sus ruinas.\r\n\r\n** VIVIR EN IGNORANCIA:** ¿Cobardía o supervivencia?\r\nFrente al peso del pensamiento existencialista surge la tentación de la inconsciencia. Vivir\r\nen la ignorancia no significa carecer de inteligencia, sino renunciar voluntariamente al\r\ncuestionamiento profundo de las estructuras que nos rigen. En la era moderna, este\r\nadormecimiento se manifiesta en la sobreinformación vacía, el consumo pasivo y la evasión\r\nconstante.\r\n\r\n** Quien no cuestiona no sufre la angustia del sentido.** No obstante, esa paz\r\naparente es una falsa libertad. Como argumentaba el existencialismo, renunciar al\r\npensamiento propio equivale a** renunciar a la propia existencia auténtica,**\r\nconvirtiéndose en un espectador de la vida ajena.\r\n\r\n** CONCLUSIÓN**\r\nEl precio de ser conscientes\r\n¿Sin lenguaje no hay pensamiento? Quizás existan emociones puras e impulsos primarios\r\nprevios a la palabra, pero es el lenguaje el que transforma la mera existencia en\r\nexperiencia consciente.\r\n\r\nEl pensamiento individual, moldeado por el romanticismo y desnudado por el existencialismo,\r\nexige un precio elevado: el fin de la inocencia. Ante la disyuntiva de pensar o vivir en la\r\nignorancia, la literatura y la filosofía nos recuerdan que, aunque la conciencia duela, es\r\nel único refugio donde el ser humano puede reclamar su verdadera libertad, rechazar su\r\nenfermedad como hijo del sistema, apropiarse de su yo:\r\nparte de la naturaleza, parte del caos llamado leguaje.',
+    'IMG/lenguaje.jpeg',
+    NULL,
+    '2026-09-04 00:44:51',
+    'publicado'
+  ),
+  (
+    24,
+    1,
+    'Café Pasaje La Bastilla: El Santuario de la Bohemia y la Rebeldía Nadaísta',
+    'Literatura',
+    'Publicación',
+    '**El Pasaje La Bastilla** no es solo un corredor de libros usados en el corazón de Medellín; es el epicentro histórico donde germinó la bohemia, el debate intelectual y la literatura libre de Antioquia. \r\nDurante la primera mitad del siglo XX, en las mesas del antiguo Café La Bastilla, se sentaron maestros de la narrativa como Tomás Carrasquilla, Porfirio Barba Jacob y Efe Gómez a discutir sobre arte y sociedad. Más tarde, a finales de los años 50, el lugar se convirtió en el santuario y «cuartel general» de Gonzalo Arango y el movimiento Nadaísta. Fue entre el aroma del tinto cargado y el humo de la conversación donde se gestaron las ideas revolucionarias de los jóvenes «Cristos en blue jeans», desafiando la solemnidad de la época y proclamando que la poesía debía despertar a la ciudad.\r\n*\"En Medellín no teníamos templos ni academias; teníamos las mesas de La Bastilla, donde el café era amargo, pero la libertad sabía a milagro.\"* > — Gonzalo Arango (Fundador del Nadaísmo, 1958).\r\nHoy en día, el pasaje conserva ese espíritu libre transformado en un catálogo vivo al aire libre: un laberinto de casetas y libreros de segunda mano donde estudiantes, poetas y caminantes siguen encontrando tesoros literarios entre la prisa y el bullicio del centro.',
+    'IMG/placeholder.jpeg',
+    NULL,
+    '2026-09-04 01:38:12',
+    'publicado'
+  ),
+  (
+    27,
+    1,
+    'todo es culpa de luciana',
+    'Literatura',
+    'Publicación',
+    'no',
+    'IMG/placeholder.jpeg',
+    NULL,
+    '2026-09-08 21:18:38',
+    'borrador'
+  ),
+  (
+    28,
+    1,
+    'El tiempo he perdido y he perdido el viaje',
+    'Literatura',
+    'Publicación',
+    'Juego mi vida, la juego contra el viento,\r\nla juego contra el mal y contra el bien.\r\nLa juego contra el uno y contra el otro,\r\nla juego contra el no y contra el sí.\r\n​La juego contra el flujo y contra el reflujo,\r\nla juego contra la sombra y contra la luz.\r\nLa juego contra el día y contra la noche,\r\nla juego contra el principio y contra el fin.\r\n​El tiempo he perdido y he perdido el viaje...\r\n¡Qué importa! Todo lo da el amor, todo lo quita.',
+    'IMG/placeholder.jpeg',
+    NULL,
+    '2026-09-07 16:32:09',
+    'publicado'
+  ),
+  (
+    31,
+    1,
+    'nose',
+    'Música',
+    'Publicación',
+    'holaaa',
+    'IMG/placeholder.jpeg',
+    NULL,
+    '2026-09-14 19:43:03',
+    'publicado'
+  ),
+  (
+    32,
+    1,
+    'LOS ZAPATEROS',
+    'Fotografía',
+    'Publicación',
+    'Retrata de manera íntima y realista el oficio artesanal de la época.',
+    'uploads/1789418462_zapateros.webp',
+    NULL,
+    '2026-09-14 20:41:02',
+    'publicado'
+  ),
+  (
+    33,
+    1,
+    'CARLOS RODRIGUEZ Y EL SER EN LO VISUAL',
+    'Fotografía',
+    'Publicación',
+    'Capturó con una mirada aguda la vida social, los inicios de las grandes fábricas, la arquitectura que hoy ya no existe y momentos clave de la historia política y urbana del país',
+    'uploads/1789418616_bicicleta.jfif',
+    NULL,
+    '2026-09-14 20:43:36',
+    'publicado'
+  ),
+  (
+    34,
+    1,
+    'MATILDE BERNAL-Intelectual y musa',
+    'Fotografía',
+    'Publicación',
+    'su imagen fue inmortalizada en retratos de estudio, como los del reconocido fotógrafo Melitón Rodríguez.',
+    'IMG/placeholder.jpeg',
+    NULL,
+    '2026-09-14 20:57:25',
+    'borrador'
+  ),
+  (
+    35,
+    1,
+    'Corrupcion',
+    'Música',
+    'Publicación',
+    'Para entender la historia de fnf corruption hay que olvidar que esto es un juego y tratarlo como lo que es un mod si pero sobre todo un mod en decadencia  (https://youtu.be/F9zmTvAsUcg?si=ZwAtEjNjZmryJoBf)',
+    'uploads/1789505010_6058ec57ccdfb.jpeg',
+    NULL,
+    '2026-09-15 20:52:27',
+    'publicado'
+  ),
+  (
+    37,
+    1,
+    'no',
+    'Música',
+    'Publicación',
+    '',
+    'IMG/placeholder.jpeg',
+    'uploads/audio_1789506872_Intermezzo.mp3',
+    '2026-09-15 21:14:32',
+    'publicado'
+  );
+
+CREATE TABLE
+  `recuperacion_tokens` (
+    `id` int (11) NOT NULL,
+    `email` varchar(255) NOT NULL,
+    `token` varchar(64) NOT NULL,
+    `expiracion` datetime NOT NULL
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+INSERT INTO
+  `recuperacion_tokens` (`id`, `email`, `token`, `expiracion`)
+VALUES
+  (
+    9,
+    'drullmirr@gmail.com',
+    'e43ed7d902243eed2426d74431475c28d7b978bd4c1ec38c637ec554208b913e',
+    '2026-09-08 21:54:03'
+  ),
+  (
+    10,
+    'drullmirr@gmail.com',
+    '72bf0000131965777b854d9cbcc29bef56c6ef82ea3e69217a0c277557f55d6d',
+    '2026-09-08 21:54:07'
+  ),
+  (
+    11,
+    'drullmirr@gmail.com',
+    '027bff006c5465d86dabb08b6c6a1c872bea05bf2e0b3edf6e8e683a7231bb66',
+    '2026-09-08 21:57:31'
+  ),
+  (
+    12,
+    'drullmirr@gmail.com',
+    'a7512eedfaee79f58c8ac886c9c5eba8de6a1b451480b77bfce2495fe211859c',
+    '2026-09-08 21:58:21'
+  );
+
+CREATE TABLE
+  `usuarios` (
+    `Id` int (11) NOT NULL,
+    `usuario` varchar(20) NOT NULL,
+    `correo` varchar(100) NOT NULL,
+    `contraseña` varchar(255) NOT NULL,
+    `foto` varchar(255) DEFAULT NULL
+  ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
+INSERT INTO
+  `usuarios` (`Id`, `usuario`, `correo`, `contraseña`, `foto`)
+VALUES
+  (
+    1,
+    'Tomzoliv',
+    'olivetto0220@gmail.com',
+    '$2y$10$T6wFAuGYYjwH1nqmeQNO6uw/QLddebCumai/shPrsENKZVySh1iW2',
+    'uploads/perfil_1.jpeg'
+  ),
+  (
+    2,
+    'Miristica',
+    'drullmirr@gmail.com',
+    '$2y$10$8FeTv2rcH2oqA8ZES5LHNOjQ./92jkMP3OU/W2kUrpQA0vSRNza4S',
+    'uploads/perfil_2.jpg'
+  ),
+  (
+    3,
+    'evanssss',
+    'evansmerlano@iejorgerobledo.edu.co',
+    '$2y$10$dR6V0uzFihCsEgQfdec0bObGFYpdALgC67aQjZLBc4TDih7txdUJu',
+    'uploads/perfil_3.jpg'
+  ),
+  (
+    4,
+    'miriplones',
+    'juegamiranda33@gmail.com',
+    '$2y$10$w7hqGpbA7PPM8IoB36HPv.SBYK5txoHn4SUOdXqyxoGidFG19g1QW',
+    'uploads/perfil_4.webp'
+  ),
+  (
+    5,
+    'luci',
+    'saramurillo@iejorgerobledo.edu.co',
+    '$2y$10$J/HlNWH5XkLYAiWu53Wn3eamdhc305vDIAj7dajZVa0UTV09AWBOG',
+    ''
+  );
+
+ALTER TABLE `comentarios` ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `obras` ADD PRIMARY KEY (`Id`);
+
+ALTER TABLE `recuperacion_tokens` ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `usuarios` ADD PRIMARY KEY (`Id`);
+
+ALTER TABLE `comentarios` MODIFY `id` int (11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 41;
+
+ALTER TABLE `obras` MODIFY `Id` int (11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 40;
+
+ALTER TABLE `recuperacion_tokens` MODIFY `id` int (11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 19;
+
+ALTER TABLE `usuarios` MODIFY `Id` int (11) NOT NULL AUTO_INCREMENT,
+AUTO_INCREMENT = 11;
+
+COMMIT;
