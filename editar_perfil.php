@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nuevo_nombre = trim($_POST['nombre']);
     $id_usuario = $_SESSION['usuario_id'];
 
-    if (!preg_match('/^[a-zA-Z0-9_]+$/', $nuevo_nombre)) {
+    if (!preg_match('/^[a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ-]+$/u', $nuevo_nombre)) {
         echo "<script>
                 alert('El nombre de usuario solo puede contener letras, números y guiones bajos (_).');
                 window.history.back();

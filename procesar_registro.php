@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $confirm_password = $_POST['confirm-password'] ?? '';
     $correo = trim($_POST['email'] ?? '');
 
-    if (!preg_match('/^[a-zA-Z0-9_]+$/', $usuario)) {
+    if (!preg_match('/^[a-zA-Z0-9_áéíóúÁÉÍÓÚñÑ-]+$/u', $usuario)) {
         echo "<script>
                 alert('El nombre de usuario solo puede contener letras, números y guiones bajos (_). Sin espacios ni símbolos.');
                 window.history.back();
