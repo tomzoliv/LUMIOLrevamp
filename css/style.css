@@ -1340,7 +1340,7 @@ body {
     border: 1px solid var(--dark-blue);
     padding: 40px;
     width: 100%;
-    max-width: 460px; 
+    max-width: 460px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -2528,13 +2528,13 @@ body {
 /*ELIMINAR CUENTA*/
 
 body.activity-page-body {
-    background-color: #dfcba8 !important; 
+    background-color: #dfcba8 !important;
 }
 
 .delete-account-card {
     background-color: #f7f4ed !important;
-    border: 1px solid #1a2b3c !important; 
-    border-top: 1px solid #1a2b3c !important; 
+    border: 1px solid #1a2b3c !important;
+    border-top: 1px solid #1a2b3c !important;
     box-shadow: none !important;
 }
 
@@ -2633,6 +2633,7 @@ audio {
 
 /*tablets*/
 @media (max-width: 1024px) {
+
     .main-container,
     .content-wrapper,
     main,
@@ -3149,6 +3150,35 @@ audio {
         font-size: 14px !important;
         font-weight: bold !important;
         text-align: center !important;
+    }
+
+    .toolbar-tools {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        gap: 5px;
+    }
+
+    .tool-btn {
+        flex: 0 0 auto;
+        padding: 8px;
+    }
+
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        margin-top: 15px;
+    }
+
+    .action-buttons button,
+    .action-buttons .btn-draft,
+    .action-buttons .btn-save {
+        width: 100% !important;
+        text-align: center;
     }
 
     .main-footer,
