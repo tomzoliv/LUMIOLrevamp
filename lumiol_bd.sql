@@ -1,31 +1,8 @@
--- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 26-10-2026 a las 21:55:21
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 8.0.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `lumiol_bd`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `actividades_culturales`
---
 
 CREATE TABLE `actividades_culturales` (
   `id` int(11) NOT NULL,
@@ -37,21 +14,12 @@ CREATE TABLE `actividades_culturales` (
   `enlace_info` varchar(255) DEFAULT '#'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `actividades_culturales`
---
 
 INSERT INTO `actividades_culturales` (`id`, `nombre`, `imagen`, `horario`, `lugar`, `descripcion`, `enlace_info`) VALUES
 (1, 'Laboratorio Abierto de Artes Plásticas', 'IMG/plasticas.webp', 'Sábados a las 10:00 A.M.', 'Biblioteca Pública Piloto (Carlos E. Restrepo)', 'Espacio de creación práctica y experimentación con técnicas plásticas como dibujo, pintura y grabado. Entrada libre.', 'https://bibliotecapiloto.gov.co/agenda/laboratorio-de-artes-plasticas-7-sesion-detalle-sesion-2775'),
 (2, 'Taller de Fotografía Básica y Celular', 'IMG/fotografia.jpg', 'Martes a las 3:00 P.M.', 'Filial Tren de Papel (BPP)', 'Exploración de la luz, composición visual y encuadre fotográfico utilizando la cámara del dispositivo móvil.', 'https://bibliotecapiloto.gov.co/agenda/taller-de-fotografia-basica-7-sesion-detalle-sesion-2749'),
 (3, 'Formación Continua en Artes y Dibujo', 'IMG/artes.webp', 'Horarios según nivel y grupo', 'Fundación Universitaria Bellas Artes', 'Cursos libres y talleres presenciales en técnica vocal, caricatura, óleo, acrílico y grabado para jóvenes y adultos.', 'https://bellasartesmed.edu.co/matriculas-educacion-continua/'),
 (4, 'Talleres Permanentes de Escritura Creativa', 'IMG/escritura.jpg', 'Varios horarios en la semana', 'Red de Bibliotecas Públicas de Medellín', 'Encuentros semanales de narrativa, cuento y poesía abiertos a la comunidad en parques biblioteca de la ciudad.', 'https://bibliotecasmedellin.gov.co/blog/talleres-de-escritura-y-clubes-de-lectura-del-sistema-de-biblioteca-publicas-de-medellin/');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `comentarios`
---
 
 CREATE TABLE `comentarios` (
   `id` int(11) NOT NULL,
@@ -62,9 +30,6 @@ CREATE TABLE `comentarios` (
   `fecha` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `comentarios`
---
 
 INSERT INTO `comentarios` (`id`, `id_obra`, `id_usuario`, `contenido`, `calificacion`, `fecha`) VALUES
 (1, 1, 2, '¡Brutal!', 5, '2026-08-06 01:02:59'),
@@ -84,11 +49,6 @@ INSERT INTO `comentarios` (`id`, `id_obra`, `id_usuario`, `contenido`, `califica
 (38, 24, 1, 'omg', 5, '2026-09-04 01:37:47'),
 (40, 9, 1, 'noi', 5, '2026-09-08 21:10:15');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `eventos_culturales`
---
 
 CREATE TABLE `eventos_culturales` (
   `id` int(11) NOT NULL,
@@ -100,21 +60,11 @@ CREATE TABLE `eventos_culturales` (
   `enlace_info` varchar(255) DEFAULT '#'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Volcado de datos para la tabla `eventos_culturales`
---
-
 INSERT INTO `eventos_culturales` (`id`, `nombre`, `imagen`, `fecha_hora`, `lugar`, `descripcion`, `enlace_info`) VALUES
 (1, 'Festival de Teatro San Ignacio 2026', 'IMG/terceramitad.webp', '2026-10-31 15:00:00', 'Teatro Popular de Medellín (San Ignacio)', 'Obra \"La tercera mitad\" presentada por Casa Taller Teatro en el marco del Festival de Teatro Comfama San Ignacio.', 'https://latiquetera.com/site/festival-de-teatro-comfama-san-ignacio-2026/events/view/la-tercera-mitad'),
 (2, 'Sinfonía de Gratitud - Concierto', 'IMG/sinfonia.webp', '2026-10-27 19:00:00', 'Teatro Pablo Tobón Uribe', 'Recital sinfónico especial de temporada en el escenario del Teatro Pablo Tobón Uribe con entrada libre previa inscripción.', 'https://teatropablotobon.com/evento/concierto-de-temporada-sinfonia-de-gratitud/'),
 (3, 'Van Gogh, Cartas de Amor para un Duelo', 'IMG/van_gogh.webp', '2026-10-28 19:30:00', 'Pequeño Teatro de Medellín (Sala Carrasquilla)', 'Una emotiva puesta en escena sobre la vida, pintura y cartas de Vincent Van Gogh. Aporte voluntario desde $15.000.', 'https://infolocal.comfenalcoantioquia.com/index.php/agenda/van-gogh-5'),
 (4, 'Exposición: Tango, un pensamiento que se baila', 'IMG/tango}.webp', '2026-11-02 10:00:00', 'Teatro Pablo Tobón Uribe', 'Muestra artística y fotográfica dedicada al patrimonio del tango y su cultura en la ciudad de Medellín. Entrada libre.', 'https://teatropablotobon.com/evento/exposicion-tango-un-pensamiento-que-se-baila-36/');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `obras`
---
 
 CREATE TABLE `obras` (
   `Id` int(11) NOT NULL,
@@ -129,9 +79,6 @@ CREATE TABLE `obras` (
   `estado` enum('publicado','borrador') DEFAULT 'publicado'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `obras`
---
 
 INSERT INTO `obras` (`Id`, `id_usuario`, `titulo`, `categoria`, `tipo_contenido`, `descripcion`, `archivo`, `archivo_audio`, `fecha`, `estado`) VALUES
 (1, 1, 'Tomás Carrasquilla', 'Literatura', 'Ensayo', '**lugar y periodo:** Santo Domingo, Antioquia (17 de enero de 1858) – Medellín, Antioquia (19 de\r\ndiciembre de 1940).\r\n\r\n**Disciplina:**Literatura (Novela, cuento, ensayo, crónica periodística).\r\n\r\n**Contexto histórico y formación**\r\nTomás Carrasquilla creció en una época marcada por los constantes enfrentamientos políticos\r\ndel siglo XIX en Colombia. Aunque inició sus estudios de Derecho en la Universidad de\r\nAntioquia, la guerra civil de 1877 interrumpió su formación académica formal. Este hecho lo\r\nllevó a formarse de manera autodidacta a través de la lectura devota de clásicos españoles y\r\nla narrativa realista europea (de autores como Gustave Flaubert y Émile Zola). A lo largo de\r\nsu vida alternó el trabajo de escritorio y el comercio con el oficio de las letras,\r\nconsolidándose como el primer escritor de la región antioqueña en asumir la literatura con\r\nrigor profesional y dedicación absoluta.\r\n\r\n<img src=\"IMG/libros.jpeg\" alt=\"Libros\">\r\n\r\n**Propuesta Estética y Estilo Literario**\r\nEl lenguaje como material plástico\r\nEl aporte estético más significativo de Carrasquilla radicó en la dignificación de la\r\noralidad. En lugar de adoptar un castellano rígido e influenciado por cánones europeos\r\nlejanos, utilizó el dialecto popular —las formas de hablar de campesinos, mineros,\r\nlavanderas y comerciantes de Antioquia— y lo elevó a categoría de arte sin caer en la\r\ncaricatura ni en la burla.\r\n\r\n**Profundidad psicológica y realismo crítico**\r\nAunque a menudo se le clasificó erróneamente dentro del \"costumbrismo\" tradicional (que solo\r\ndescribía paisajes y costumbres pintorescas), la propuesta de Carrasquilla fue más allá. Sus\r\nhistorias poseen un denso trasfondo crítico: cuestionó la hipocresía de las clases altas, la\r\nambición desmedida impulsada por la fiebre del oro, las rigideces religiosas y los\r\nprejuicios raciales de la sociedad antioqueña de los siglos XIX y XX.\r\n\r\n**Obras Representativas y su Análisis**\r\nLa marquesa de Yolombó (1928): Considerada su obra cumbre. Es una novela\r\nhistórica ambientada a finales de la colonia que reconstruye la vida social, económica y\r\nracial en las zonas de minería de oro.\r\n\r\n**Aporte:** A través del personaje de Doña Bárbara Caballero y Alzate, explora la ambición, la\r\nsuperstición y el rol represivo que la sociedad imponía a las mujeres de la época.\r\n\r\n**Frutos de mi tierra (1896):**Su primera gran novela. Nació de una apuesta en\r\nla que el autor sostuvo que se podía redactar una gran obra tomando como insumo las\r\nrencillas cotidianas de un pueblo pequeño.\r\n\r\nEs un retrato mordaz sobre las apariencias, los chismes, la envidia y las dinámicas\r\nsociales de la provincia.\r\n\r\n**En la diestra de Dios Padre (1897):** Un cuento clásico fundado en la tradición\r\noral de la región sobre Peralta, un hombre piadoso que recibe dones divinos y logra engañar\r\na la Muerte y al Diablo.\r\n\r\n**Aporte:**Es señalado por la crítica literaria hispanoamericana como uno de los antecedentes\r\nmás claros del realismo mágico, al fusionar con naturalidad lo fantástico con la\r\ncotidianidad popular.\r\n\r\n**Grandeza (1910)**: Novela urbana enfocada en la naciente burguesía de Medellín.\r\n\r\n**Aporte:** Satiriza las modas, pretensiones e ínfulas de aristocracia de las familias\r\nadineradas de la ciudad en pleno proceso de industrialización.\r\n\r\n<img src=\"IMG/6772ff5e9d730ff9fb9bab0e_6772fd6cb6ad22bb00eeb6a7_9.webp\" alt=\"pintura\">\r\n\r\n**Impacto, Legado e Importancia en Medellín**\r\nTestigo de la transformación urbana\r\nCarrasquilla documentó el paso de Medellín de una villa provinciana a una urbe moderna e\r\nindustrializada. Sus obras y crónicas son un registro histórico invaluable sobre cómo\r\ncambiaron los espacios, los valores y las dinámicas sociales de la ciudad a principios del\r\nsiglo XX.\r\n\r\n**Dinamizador de la vida cultural**\r\nA pesar de su ceguera en los últimos años de vida, su casa en Medellín y las tertulias a las\r\nque asistía sirvieron como punto de convergencia para las nuevas vanguardias literarias y\r\nartísticas, influyendo en intelectuales y creadores de la talla de Fernando González Ochoa y\r\nel grupo de Los Panidas (encabezado por León de Greiff).\r\n\r\n**Memoria en la infraestructura de la ciudad**\r\nSu nombre y legado hoy trascienden los libros. El Parque Biblioteca Tomás Carrasquilla (La\r\nQuintana), ubicado entre las comunas 6 y 7 de Medellín, lleva su nombre como un\r\nreconocimiento a su valor patrimonial, sirviendo como un espacio de transformación social y\r\nacceso a la cultura para la ciudadanía.', 'IMG/tomasxd.jpg', NULL, '2026-09-04 00:57:53', 'publicado'),
@@ -161,11 +108,6 @@ INSERT INTO `obras` (`Id`, `id_usuario`, `titulo`, `categoria`, `tipo_contenido`
 (37, 1, 'no', 'Música', 'Publicación', '', 'IMG/placeholder.jpeg', 'uploads/audio_1789506872_Intermezzo.mp3', '2026-09-15 21:14:32', 'publicado'),
 (40, 1, 'hdjksjka', 'Literatura', 'Publicación', 'no', 'IMG/placeholder.jpeg', '', '2026-10-26 20:53:44', 'borrador');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `recuperacion_tokens`
---
 
 CREATE TABLE `recuperacion_tokens` (
   `id` int(11) NOT NULL,
@@ -174,9 +116,6 @@ CREATE TABLE `recuperacion_tokens` (
   `expiracion` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `recuperacion_tokens`
---
 
 INSERT INTO `recuperacion_tokens` (`id`, `email`, `token`, `expiracion`) VALUES
 (9, 'drullmirr@gmail.com', 'e43ed7d902243eed2426d74431475c28d7b978bd4c1ec38c637ec554208b913e', '2026-09-08 21:54:03'),
@@ -184,11 +123,6 @@ INSERT INTO `recuperacion_tokens` (`id`, `email`, `token`, `expiracion`) VALUES
 (11, 'drullmirr@gmail.com', '027bff006c5465d86dabb08b6c6a1c872bea05bf2e0b3edf6e8e683a7231bb66', '2026-09-08 21:57:31'),
 (12, 'drullmirr@gmail.com', 'a7512eedfaee79f58c8ac886c9c5eba8de6a1b451480b77bfce2495fe211859c', '2026-09-08 21:58:21');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
 
 CREATE TABLE `usuarios` (
   `Id` int(11) NOT NULL,
@@ -198,9 +132,6 @@ CREATE TABLE `usuarios` (
   `foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Volcado de datos para la tabla `usuarios`
---
 
 INSERT INTO `usuarios` (`Id`, `usuario`, `correo`, `contraseña`, `foto`) VALUES
 (1, 'Tomzoliv', 'olivetto0220@gmail.com', '$2y$10$T6wFAuGYYjwH1nqmeQNO6uw/QLddebCumai/shPrsENKZVySh1iW2', 'uploads/perfil_1.jpeg'),
@@ -209,87 +140,48 @@ INSERT INTO `usuarios` (`Id`, `usuario`, `correo`, `contraseña`, `foto`) VALUES
 (4, 'miriplones', 'juegamiranda33@gmail.com', '$2y$10$w7hqGpbA7PPM8IoB36HPv.SBYK5txoHn4SUOdXqyxoGidFG19g1QW', 'uploads/perfil_4.webp'),
 (5, 'luci', 'saramurillo@iejorgerobledo.edu.co', '$2y$10$J/HlNWH5XkLYAiWu53Wn3eamdhc305vDIAj7dajZVa0UTV09AWBOG', '');
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `actividades_culturales`
---
 ALTER TABLE `actividades_culturales`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `comentarios`
---
+
 ALTER TABLE `comentarios`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `eventos_culturales`
---
+
 ALTER TABLE `eventos_culturales`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `obras`
---
+
 ALTER TABLE `obras`
   ADD PRIMARY KEY (`Id`);
 
---
--- Indices de la tabla `recuperacion_tokens`
---
 ALTER TABLE `recuperacion_tokens`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `usuarios`
---
+
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`Id`);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `actividades_culturales`
---
 ALTER TABLE `actividades_culturales`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- AUTO_INCREMENT de la tabla `comentarios`
---
+
 ALTER TABLE `comentarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
---
--- AUTO_INCREMENT de la tabla `eventos_culturales`
---
+
 ALTER TABLE `eventos_culturales`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
---
--- AUTO_INCREMENT de la tabla `obras`
---
+
 ALTER TABLE `obras`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
---
--- AUTO_INCREMENT de la tabla `recuperacion_tokens`
---
+
 ALTER TABLE `recuperacion_tokens`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
+
 ALTER TABLE `usuarios`
   MODIFY `Id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
