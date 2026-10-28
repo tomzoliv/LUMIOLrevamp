@@ -67,40 +67,41 @@ $res_obras = $conexion->query($sql_obras);
 </head>
 
 <body>
-<div class="header" id="Inicio">
-    <header class="main-header">
-        <div class="container header-top">
-            <a href="index.php" class="logo-container">
-                <div class="logo-icon">
-                    <img src="IMG/lumiollogo.png" alt="Logo LUMIOL" class="logo-img">
+    <div class="header" id="Inicio">
+        <header class="main-header">
+            <div class="container header-top">
+                <a href="index.php" class="logo-container">
+                    <div class="logo-icon">
+                        <img src="IMG/lumiollogo.png" alt="Logo LUMIOL" class="logo-img">
+                    </div>
+                    <h1 class="logo-text">LUMIOL</h1>
+                </a>
+                <div class="search-container">
+                    <form action="explorar.php" method="GET">
+                        <input type="text" name="cat" placeholder="Buscar categorías..."
+                            value="<?php echo htmlspecialchars($cat_filtrada); ?>">
+                        <button type="submit"><i class="fas fa-search"></i></button>
+                    </form>
                 </div>
-                <h1 class="logo-text">LUMIOL</h1>
-            </a>
-            <div class="search-container">
-                <form action="explorar.php" method="GET">
-                    <input type="text" name="cat" placeholder="Buscar categorías..."
-                        value="<?php echo htmlspecialchars($cat_filtrada); ?>">
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </form>
+                <?php if (isset($_SESSION['usuario_nombre'])): ?>
+                    <a href="actividad.php" class="btn-auth">Hola,
+                        <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></a>
+                <?php else: ?>
+                    <a href="login.php" class="btn-auth">INICIAR SESIÓN</a>
+                <?php endif; ?>
             </div>
-            <?php if (isset($_SESSION['usuario_nombre'])): ?>
-                <a href="actividad.php" class="btn-auth">Hola,
-                    <?php echo htmlspecialchars($_SESSION['usuario_nombre']); ?></a>
-            <?php else: ?>
-                <a href="login.php" class="btn-auth">INICIAR SESIÓN</a>
-            <?php endif; ?>
-        </div>
-        <nav class="nav-bar">
-            <ul class="nav-links">
-                <li><a href="index.php">INICIO</a></li>
-                <li><a href="popular.php">POPULAR</a></li>
-                <li><a href="actividad.php">ACTIVIDAD</a></li>
-                <li><a href="explorar.php" class="active">EXPLORAR</a></li>
-                <li><a href="legado.php">LEGADO</a></li>
-            </ul>
-        </nav>
-    </header>
-</div>
+            <nav class="nav-bar">
+                <ul class="nav-links">
+                    <li><a href="index.php">INICIO</a></li>
+                    <li><a href="popular.php">POPULAR</a></li>
+                    <li><a href="actividad.php">ACTIVIDAD</a></li>
+                    <li><a href="explorar.php" class="active">EXPLORAR</a></li>
+                    <li><a href="legado.php">LEGADO</a></li>
+                    <li><a href="agenda.php">AGENDA CULTURAL</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
 
     <main class="container main-content">
         <section style="margin-bottom: 50px;">
@@ -169,16 +170,22 @@ $res_obras = $conexion->query($sql_obras);
                         <?php
                         $id_actual = $obra['Id'] ?? $obra['id'];
                         $datos = obtenerDatosObra($conexion, $id_actual);
+
+        
+                        $ruta_imagen = (!empty($obra['archivo']) && file_exists($obra['archivo']))
+                            ? $obra['archivo']
+                            : 'IMG/lumiollogo.png';
                         ?>
 
                         <article class="work-card">
                             <a href="ver_obra.php?id=<?php echo $id_actual; ?>" style="text-decoration:none; color:inherit;">
                                 <div class="work-image-placeholder">
-                                    <img src="<?php echo htmlspecialchars(!empty($obra['archivo']) ? $obra['archivo'] : 'IMG/lumiollogo.png'); ?>"
-                                        alt="Sin imagen disponible">
+                                    <img src="<?php echo htmlspecialchars($ruta_imagen); ?>"
+                                        alt="<?php echo htmlspecialchars($obra['titulo']); ?>">
                                 </div>
                                 <div class="work-info">
-                                    <span class="work-tag"><?php echo strtoupper(htmlspecialchars($obra['categoria'] ?? 'GENERAL')); ?></span>
+                                    <span
+                                        class="work-tag"><?php echo strtoupper(htmlspecialchars($obra['categoria'] ?? 'GENERAL')); ?></span>
                                     <h3><?php echo htmlspecialchars($obra['titulo']); ?></h3>
                                     <p class="work-author">
                                         <?php echo htmlspecialchars($obra['tipo_contenido'] ?? $obra['descripcion'] ?? 'Publicación'); ?>

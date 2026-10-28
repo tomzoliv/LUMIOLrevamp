@@ -39,6 +39,7 @@
                 <li><a href="actividad.php">ACTIVIDAD</a></li>
                 <li><a href="explorar.php">EXPLORAR</a></li>
                 <li><a href="legado.php">LEGADO</a></li>
+                <li><a href="agenda.php">AGENDA CULTURAL</a></li>
             </ul>
         </nav>
     </header>

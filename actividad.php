@@ -119,6 +119,7 @@ if ($id_usuario) {
                     <li><a href="actividad.php" class="active">ACTIVIDAD</a></li>
                     <li><a href="explorar.php">EXPLORAR</a></li>
                     <li><a href="legado.php">LEGADO</a></li>
+                    <li><a href="agenda.php">AGENDA CULTURAL</a></li>
                 </ul>
             </nav>
         </header>
@@ -175,14 +176,13 @@ if ($id_usuario) {
                                     <div class="card-header">
                                         <span class="card-tag"><?php echo htmlspecialchars($borrador['categoria']); ?></span>
                                         <div class="card-media">
-                                            <?php if (!empty($borrador['archivo']) && file_exists($borrador['archivo'])): ?>
-                                                <img src="<?php echo htmlspecialchars($borrador['archivo']); ?>"
-                                                    alt="<?php echo htmlspecialchars($borrador['titulo']); ?>">
-                                            <?php else: ?>
-                                                <div class="sin-imagen">
-                                                    Sin imagen disponible
-                                                </div>
-                                            <?php endif; ?>
+                                            <?php
+                                            $imagen_borrador = (!empty($borrador['archivo']) && file_exists($borrador['archivo']))
+                                                ? $borrador['archivo']
+                                                : 'IMG/lumiollogo.png';
+                                            ?>
+                                            <img src="<?php echo htmlspecialchars($imagen_borrador); ?>"
+                                                alt="<?php echo htmlspecialchars($borrador['titulo']); ?>">
                                         </div>
                                     </div>
                                     <div class="card-body">
@@ -206,21 +206,27 @@ if ($id_usuario) {
             <?php else: ?>
 
                 <div class="section-block">
-                    <h3 class="column-title">Mis publicaciones <i class="fa-regular fa-file"></i></h3>
+                    <h3 class="column-title">Mis publicaciones <i class="fa-regular fa-file-lines"></i></h3>
 
                     <div class="cards-grid">
                         <?php if (!empty($mis_publicaciones)): ?>
                             <?php foreach ($mis_publicaciones as $obra): ?>
                                 <?php
                                 $id_actual = $obra['Id'] ?? $obra['id'];
+
                                 $datos = obtenerDatosObra($conexion, $id_actual);
+
+                                $imagen_publicacion = (!empty($obra['archivo']) && file_exists($obra['archivo']))
+                                    ? $obra['archivo']
+                                    : 'IMG/lumiollogo.png';
                                 ?>
+
                                 <article class="work-card">
                                     <a href="ver_obra.php?id=<?php echo $id_actual; ?>"
                                         style="text-decoration:none; color:inherit;">
                                         <div class="work-image-placeholder">
-                                            <img src="<?php echo htmlspecialchars(!empty($obra['archivo']) ? $obra['archivo'] : 'IMG/lumiollogo.png'); ?>"
-                                                alt="Sin imagen disponible">
+                                            <img src="<?php echo htmlspecialchars($imagen_publicacion); ?>"
+                                                alt="<?php echo htmlspecialchars($obra['titulo']); ?>">
                                         </div>
                                         <div class="work-info">
                                             <span
@@ -255,12 +261,16 @@ if ($id_usuario) {
                                 <?php
                                 $id_like = $obra_like['Id'] ?? $obra_like['id'];
                                 $datos_like = obtenerDatosObra($conexion, $id_like);
+
+                                $imagen_like = (!empty($obra_like['archivo']) && file_exists($obra_like['archivo']))
+                                    ? $obra_like['archivo']
+                                    : 'IMG/lumiollogo.png';
                                 ?>
                                 <article class="work-card">
                                     <a href="ver_obra.php?id=<?php echo $id_like; ?>" style="text-decoration:none; color:inherit;">
                                         <div class="work-image-placeholder">
-                                            <img src="<?php echo htmlspecialchars(!empty($obra_like['archivo']) ? $obra_like['archivo'] : 'IMG/lumiollogo.png'); ?>"
-                                                alt="Sin imagen disponible">
+                                            <img src="<?php echo htmlspecialchars($imagen_like); ?>"
+                                                alt="<?php echo htmlspecialchars($obra_like['titulo']); ?>">
                                         </div>
                                         <div class="work-info">
                                             <span

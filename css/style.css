@@ -2596,6 +2596,97 @@ body.activity-page-body {
     color: #b84a39;
 }
 
+/* AGENDA CUTURAL*/
+.agenda-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.agenda-card {
+    background-color: #f7f4ed; 
+    border: 1px solid #1c2d42; 
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.agenda-card:hover {
+    transform: scale(1.1);
+}
+
+.agenda-img-container {
+    width: 100%;
+    height: 200px;
+    background-color: #1c2d42;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 3px solid #a3483b; /* Línea roja divisoria */
+}
+
+.agenda-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.agenda-content {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.agenda-title {
+    font-size: 1.2rem;
+    color: #1c2d42;
+    margin-bottom: 10px;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+}
+
+.agenda-meta {
+    font-size: 0.85rem;
+    color: #a3483b;
+    margin-bottom: 6px;
+    font-style: italic;
+}
+
+.agenda-desc {
+    font-size: 0.95rem;
+    color: #333;
+    margin-top: 15px;
+    line-height: 1.4;
+}
+
+.agenda-footer {
+    padding: 12px 20px;
+    background-color: #efe8d8;
+    border-top: 1px dashed #c0b8a6;
+    text-align: right;
+}
+
+.btn-info-event {
+    display: inline-block;
+    background-color: #a3483b;
+    color: #ffffff !important;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.btn-info-event:hover {
+    background-color: #82352a;
+}
+
 /*responsive de tooodo*/
 
 *,
